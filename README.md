@@ -1,0 +1,2 @@
+# genericArray
+school project
