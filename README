@@ -1,0 +1,81 @@
+//////1.Functia add_last
+
+-in bucla for parcurg fiecare element din vector astfel incat vector_length face referire la lungimea datelor tuturor elementelor
+
+-pentru a adauga un element la urma, mai intai voi realoca vectorul astfel incat
+sa contina spatiu pentru (len+1) headere si pentru toate void*data(vector_length+data->header->len) 
+
+-ma voi folosi apoi de functia memcpy pentru a:
+   -pun in vectorul initial un sizeof(head) (spatiul pentru header-ul noului elem) 
+   -pun in vectorul de mai sus si dimensiunea lui void*data a noului element
+
+-la final incrementez numarul total de elemente al vectorului (*len)
+
+
+//////2.Functia add_at
+
+-vector_length dimensiunea totala (pentru void*data) a vectorului, iar index_length dimensiunea lui void*data pana la index
+
+-am doua bucle for, prima pentru partea vectorului dinainte de index-ul unde se va insera, care ramane neschimbata
+si cea de a doua pentru a afla lungimea partii de vector care trebuie mutate mai "in dreapta"
+
+-aux va fi un vector auxiliar (prima parte a vectorului initial, pana in index) si size dimensiunea acesuia
+
+-copy este un nou bloc de memorie de dimensiune size ajutator:
+se iau size elemente din aux si se adauga in acest copy si "se muta mai in dreapta"
+
+-arr il realoc cu un dimensiunea intiala a vectorului + un sizeof(head) in plus si dimensiunea pentru noul data
+
+-ma folosesc de functia memcpy pentru:
+  -subvectorului care este de la prima pozitie a lui arr pana la elementul de pe pozitia index ii adaug un singur header
+  -in urmatorul memcpy ii adaug dimensiunea necesara pentru data
+  -in ultimul memcpy vectorul care este de la inceput pana la index si care contine headerul si dataul elementului nou il mut inapoi "in stanga" cu dimesiunea size a blocului copy
+
+
+//////3. Functia find
+
+- in variabila header dupa bucla for voi avea header-ul elementului de la index
+
+- in variabila data (dupa for) voi avea void*data-ul elementului de pe pozitia index
+
+- pentru a printa informatii necesare ma folosesc de un switch care va fi in functie de tipul header-ului (header.type)
+
+de exemplu pentru case 1: (asemanator ca la functia print)
+-numele dedicatului il obtin prin adunarea la data(care este la inceputul numelui dedicatorului) doua sizeof(int8_t) (si pentru dedicat si pentru dedicator, trebuie sa trec de cele doua sume de bani ca sa am urmatorul nume) si un 1 (caracterul nul)
+-prima suma este imediat dupa numele dedicatorului (adun la data,care pointeaza la prima litera din numele acestuia, dimensiunea numelui + 1)
+-cea de a doua suma este dupa prima, deci dimensiunea pe care o folosesc pentru al doilea printf + sizeof(int8_t)
+la fel si pentru case 2 si case 3 (difera doar tipul int-urilor)
+
+
+//////4. Functia delete_at
+
+- variabila vector_legth este pentru lungimea tututor void *data, len_to_index este lungimea tututor void *data pana la index inclusiv, iar index_len este lungimea lui void*data pentru elementul de pe pozitia index
+
+- in cazul in care nr de elemente din vector este 1 prin stergerea singurui element len devine zero si eliberez memoria vectorului
+
+- altfel am o bucla for in care parcurg elementele pana la index inclusiv
+
+- index_len = header.len la iesirea din bucla reprezinta ultimul header (al indexului)
+
+-ma folosesc de un alt for pentru a parcurge de la index+1 pana la finalul vectorului (sar peste index)
+
+-aux este subvectorul care contine headerele si void*data-urile pana la index
+
+-copiez (lungimea totala a vect - lungimea pana la index) headere si void*data-uri din aux in subvectorul care aux-(header-ul si data-ul elementului de sters)
+
+-apoi il realoc pe arr astfel incat sa aiba acelasi spatiu ca inainte dar cu un header si data mai putin si scad din nr-ul de elemente din vector
+-tratez cazul in care arr este nul si nu am ce sterge din elemente
+
+//////5. Functia print
+
+- parcurg fiecare element din vector, ii obtin header-ul (pentru ca apoi sa ii iau tipul) si numele dedicatorului (prima informatie din void*data)
+-voi avea 3 case-uri
+
+de exemplu pentru case 1:
+-numele dedicatului il obtin prin adunarea la data(care este la inceputul numelui dedicatorului) doua sizeof(int8_t) (si pentru dedicat si pentru dedicator, trebuie sa trec de cele doua sume de bani ca sa am urmatorul nume) si un 1 (caracterul nul)
+-prima suma este imediat dupa numele dedicatorului (adun la data,care pointeaza la prima litera din numele acestuia, dimensiunea numelui + 1)
+-cea de a doua suma este dupa prima, deci dimensiunea pe care o folosesc pentru al doilea printf + sizeof(int8_t)
+la fel si pentru case 2 si case 3 (difera doar tipul int-urilor)
+
+
+
