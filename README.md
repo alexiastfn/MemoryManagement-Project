@@ -1,2 +1,2 @@
 # genericArray
-school project
+Proiect in care am exersat lucrul cu memoria in C
